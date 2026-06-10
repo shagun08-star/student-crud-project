@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Students</title>
+</head>
+
+<body>
+
+<h1>All Students</h1>
+
+<button onclick="updateStudents()">
+Update City
+</button>
+
+<button onclick="deleteStudents()">
+Delete All
+</button>
+
+<br><br>
+
+<div id="data"></div>
+
+<script>
+
+loadStudents();
+
+function loadStudents(){
+
+fetch("/allstudents")
+
+.then(res=>res.json())
+
+.then(data=>{
+
+let html="";
+
+data.forEach((s)=>{
+
+html += `
+<div>
+
+Name: ${s.name}
+<br>
+
+Age: ${s.age}
+<br>
+
+City: ${s.city}
+
+<hr>
+
+</div>
+`;
+
+});
+
+document.getElementById(
+"data"
+).innerHTML=html;
+
+});
+
+}
+
+function updateStudents(){
+
+fetch("/update")
+
+.then(()=>{
+
+alert(
+"Students Updated"
+);
+
+loadStudents();
+
+});
+
+}
+
+function deleteStudents(){
+
+fetch("/delete")
+
+.then(()=>{
+
+alert(
+"Students Deleted"
+);
+
+loadStudents();
+
+});
+
+}
+
+</script>
+
+</body>
+
+</html>
